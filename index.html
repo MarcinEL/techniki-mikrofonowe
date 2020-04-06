@@ -13,7 +13,8 @@
 
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/simple.css" id="theme"> <!--beige/black/blood/league/moon/night/serif/simple/sky/solarized/white-->
+	<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+	<!--beige/black/blood/league/moon/night/serif/simple/sky/solarized/white-->
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/monokai.css">
@@ -60,11 +61,18 @@
 				</section>
 			</section>
 			<section>
-				<div id="waveform">
-                    <!-- Here be the waveform -->
-                </div>
+				<script>
+					wavesurfer = WaveSurfer.create({
+						container: '#waveform'
+					});
+					wavesurfer.load("https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3");
+				</script>
+				
+				<div id="waveform" onclick="wavesurfer.playPause();">
+					<!-- Here be the waveform -->
+				</div>
 
-                <div class="controls">
+				<!-- <p class="controls">
                     <button class="btn btn-primary" data-action="play">
                         <i class="glyphicon glyphicon-play"></i>
                         Play
@@ -72,7 +80,7 @@
                         <i class="glyphicon glyphicon-pause"></i>
                         Pause
                     </button>
-                </div>
+                </p> -->
 			</section>
 		</div>
 		<!--slides-->
@@ -97,8 +105,8 @@
 				{ src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
 				{ src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
 				{ src: 'plugin/highlight/highlight.js' },
-				{ src: 'https://unpkg.com/wavesurfer.js/dist/wavesurfer.js'},
-				{ src: 'https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.js'},
+				{ src: 'https://unpkg.com/wavesurfer.js/dist/wavesurfer.js' },
+				{ src: 'https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.js' },
 				{ src: 'plugin/search/search.js', async: true },
 				{ src: 'plugin/zoom-js/zoom.js', async: true },
 				{ src: 'plugin/notes/notes.js', async: true }
