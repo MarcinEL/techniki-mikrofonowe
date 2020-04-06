@@ -28,16 +28,9 @@
 		document.getElementsByTagName('head')[0].appendChild(link);
 	</script>
 	
-	<!-- <script src="js/app.js"></script> -->
+	<script src="js/app.js"></script>
 	<!-- wavesurfer.js -->
-	<!-- <script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script> -->
-
-	<style>
-		canvas {
-			background: black;
-			background: -webkit-radial-gradient(center, ellipse cover, #17446d 0%, #000000 100%);
-		}
-	</style>
+	<script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script>
 
 </head>
 
@@ -72,14 +65,21 @@
 				</section>
 			</section>
 			<section>
-				<!-- <div id="waveform" onclick="wavesurfer.playPause();"></div> -->
-				<audio controls>
-					<source src="https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3" type="audio/mp3">
-				</audio>
-				<canvas height="400" width="1280"></canvas>
-				<script>
-            		$('canvas').audioVisualizor($('audio')[0]);
-				</script>
+				<div id="waveform">
+					<!-- Here be the waveform -->
+				</div>
+				<div class="controls">
+					<div class="row">
+						<div class="col-sm-7">
+							<button class="btn btn-primary" data-action="play">
+								<i class="glyphicon glyphicon-play"></i>
+								Play /
+								<i class="glyphicon glyphicon-pause"></i>
+								Pause
+							</button>
+						</div>
+					</div>
+				</div>
 			</section>
 		</div>
 		<!--slides-->
