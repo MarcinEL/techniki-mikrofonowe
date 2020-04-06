@@ -59,6 +59,21 @@
 						controls></audio>
 				</section>
 			</section>
+			<section>
+				<div id="waveform">
+                    <!-- Here be the waveform -->
+                </div>
+
+                <div class="controls">
+                    <button class="btn btn-primary" data-action="play">
+                        <i class="glyphicon glyphicon-play"></i>
+                        Play
+                        /
+                        <i class="glyphicon glyphicon-pause"></i>
+                        Pause
+                    </button>
+                </div>
+			</section>
 		</div>
 		<!--slides-->
 	</div>
@@ -82,6 +97,8 @@
 				{ src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
 				{ src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
 				{ src: 'plugin/highlight/highlight.js' },
+				{ src: 'https://unpkg.com/wavesurfer.js/dist/wavesurfer.js'},
+				{ src: 'https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.js'},
 				{ src: 'plugin/search/search.js', async: true },
 				{ src: 'plugin/zoom-js/zoom.js', async: true },
 				{ src: 'plugin/notes/notes.js', async: true }
