@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         container: document.querySelector('#waveform'),
         container: '#waveform',
         waveColor: 'blue',
-        height: '256'
+        height: 512
     });
 
     wavesurfer.on('error', function(e) {
