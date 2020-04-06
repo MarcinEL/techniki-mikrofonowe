@@ -82,11 +82,13 @@
 	</div>
 	<!--reveal-->
 	<script>
-		alert('Dupa!')
+		$(function(){
+		//alert('Dupa!')
 		wavesurfer = WaveSurfer.create({
 			container: '#waveform'
 		});
 		wavesurfer.load("https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3");
+	}
 	</script>
 
 	<script src="js/reveal.js"></script>
