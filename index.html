@@ -61,15 +61,10 @@
 				</section>
 			</section>
 			<section>
-				<script>
-					wavesurfer = WaveSurfer.create({
-						container: '#waveform'
-					});
-					wavesurfer.load("https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3");
-				</script>
-				
+
+
 				<div id="waveform" onclick="wavesurfer.playPause();">
-					<!-- Here be the waveform -->
+					<p>Test</p>
 				</div>
 
 				<!-- <p class="controls">
@@ -86,7 +81,13 @@
 		<!--slides-->
 	</div>
 	<!--reveal-->
-
+	<script>
+		wavesurfer = WaveSurfer.create({
+			container: '#waveform'
+		});
+		wavesurfer.load("https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3");
+	</script>
+	
 	<script src="js/reveal.js"></script>
 
 	<script>
