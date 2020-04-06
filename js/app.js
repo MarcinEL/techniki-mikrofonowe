@@ -38,5 +38,5 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
 
-    wavesurfer.load('https://www.dropbox.com/s/ctgg4z0wgduocox/RS_LMP_ElecGtr01_2C_45Degrees.wav?dl=1');
+    wavesurfer.load('https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3');
 });
