@@ -6,14 +6,13 @@ var wavesurfer = {};
 // Init & load audio file
 document.addEventListener('DOMContentLoaded', function() {
     var playButton = document.querySelector('#playBtn'),
-    toggleMuteButton = document.querySelector('#toggleMuteBtn'),
-    setMuteOnButton = document.querySelector('#setMuteOnBtn'),
-    setMuteOffButton = document.querySelector('#setMuteOffBtn');
+    toggleMuteButton = document.querySelector('#toggleMuteBtn');
 
     wavesurfer = WaveSurfer.create({
         container: document.querySelector('#waveform'),
         container: '#waveform',
-        waveColor: 'blue'
+        waveColor: 'blue',
+        height: 256
     });
 
     wavesurfer.on('error', function(e) {
@@ -30,14 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         toggleMuteButton.onclick = function() {
             wavesurfer.toggleMute();
-        };
-
-        setMuteOnButton.onclick = function() {
-            wavesurfer.setMute(true);
-        };
-
-        setMuteOffButton.onclick = function() {
-            wavesurfer.setMute(false);
         };
     });
 });
