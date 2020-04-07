@@ -126,6 +126,10 @@
 				progressColor: '#46B54D',
 				height: 256
 			});
+			//Load audio file
+			wavesurfer.load(path);
+			// Draw peaks
+			wavesurfer.drawBuffer();
 
 			wavesurfer.once('ready', function () {
 				console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
@@ -157,10 +161,7 @@
 
 
 		
-			//Load audio file
-			wavesurfer.load(path);
-			// Draw peaks
-			wavesurfer.drawBuffer();
+
 		});
 	</script>
 
