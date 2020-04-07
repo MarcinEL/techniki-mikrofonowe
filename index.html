@@ -134,8 +134,7 @@
 			wavesurfer.on('error', function (e) {
 				console.warn(e);
 			});
-			//Load audio file
-			wavesurfer.load(path);
+
 
 			//Add play button event
 			$(this).find(".playpause").click(function () {
@@ -154,6 +153,11 @@
 			$(this).find(".reset").click(function () {
 					wavesurfer.seekTo(0);		
 			});
+
+			//Load audio file
+			wavesurfer.load(path);
+			// Draw peaks
+			wavesurfer.drawBuffer();
 		});
 	</script>
 
