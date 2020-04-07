@@ -92,12 +92,6 @@
 				<!------------------ slide ------------------->
 				<h2>Nagranie 2</h2>
 				<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
-				<div id="waveform">
-					<!-- Here be the waveform -->
-				</div>
-
-				<button id="playBtn" class="btn btn-primary">Play / Pause</button>
-				<button id="toggleMuteBtn" class="btn btn-primary">Toggle Mute</button>
 
 			</section>
 		</div>
@@ -118,7 +112,7 @@
 			center: true,
 
 			width: "80%",
-			height: "70%",
+			height: "80%",
 			margin: 0,
 			minScale: 0.2,
 			maxScale: 1,
@@ -140,10 +134,12 @@
 	<script>
 		Reveal.addEventListener('slidechanged', function () {
 			if (event.currentSlide.id === 'nagranie1') {
-				wavesurfer.load('https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3');
+				//wavesurfer.load('https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3');
+				alert('nagranie1')
 			}
 			else if (event.currentSlide.id === 'nagranie2') {
-				wavesurfer.load('http://ice1.somafm.com/secretagent-128-mp3');
+				//wavesurfer.load('http://ice1.somafm.com/secretagent-128-mp3');
+				alert('nagranie2');
 			}
 
 	</script>

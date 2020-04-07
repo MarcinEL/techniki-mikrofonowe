@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleMuteButton = document.querySelector('#toggleMuteBtn');
 
     wavesurfer = WaveSurfer.create({
-        container: document.querySelector('#waveform'),
+        container: '#waveform',
         waveColor: '#D2EDD4',
         progressColor: '#46B54D',
         barHeight: 1.4 
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Load audio from URL
-    //wavesurfer.load('https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3');
+    wavesurfer.load('https://ia800301.us.archive.org/15/items/fire_and_ice_librivox/fire_and_ice_frost_apc_64kb.mp3');
 
     wavesurfer.once('ready', function() {
         playButton.onclick = function() {
