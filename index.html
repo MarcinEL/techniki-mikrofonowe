@@ -32,6 +32,7 @@
 	<script src="js/app.js"></script>
 	<!-- wavesurfer.js -->
 	<script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script>
+	<script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<script>
@@ -105,6 +106,10 @@
 	<!--reveal-->
 
 	<script>
+			wavesurfer.on('pause', function () {
+				wavesurfer.params.container.style.opacity = 0.9;
+			});
+
 		$('.wave').each(function () {
 			//Generate unic ud
 			var id = '_' + Math.random().toString(36).substr(2, 9);
@@ -118,12 +123,30 @@
 				container: '#' + id,
 				waveColor: '#D2EDD4',
 				progressColor: '#46B54D',
-				height: 256
+				height: 256,
+				plugins: [
+					WaveSurfer.cursor.create({
+						showTime: true,
+						opacity: 1,
+						customShowTimeStyle: {
+							'background-color': '#000',
+							color: '#fff',
+							padding: '2px',
+							'font-size': '10px'
+						}
+					})
+				]
 			});
 
+			wavesurfer.once('ready', function () {
+				console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
+			});
+
+			wavesurfer.on('error', function (e) {
+				console.warn(e);
+			});
 			//Load audio file
 			wavesurfer.load(path);
-			wavesurfer.setHeight(256);
 
 			//Add play button event
 			$(this).find(".playpause").click(function () {
