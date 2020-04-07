@@ -144,8 +144,11 @@
 			});
 			//Add stop button event
 			$(this).find(".stop").click(function () {
-				wavesurfer.playPause();
-				wavesurfer.seekTo(0);
+				if(wavesurfer.isPlaying()){
+					wavesurfer.playpause();
+					wavesurfer.seekTo(0);
+				}
+				
 			});
 		});
 	</script>
