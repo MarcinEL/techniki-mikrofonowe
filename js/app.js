@@ -1,26 +1,26 @@
-$('.wave').each(function() {
-    //Generate unic ud
-    var id = '_' + Math.random().toString(36).substr(2, 9);
-    var path = $(this).attr('data-path');
+// $('.wave').each(function() {
+//     //Generate unic ud
+//     var id = '_' + Math.random().toString(36).substr(2, 9);
+//     var path = $(this).attr('data-path');
   
-    //Set id to container
-    $(this).find(".wave-container").attr("id", id);
+//     //Set id to container
+//     $(this).find(".wave-container").attr("id", id);
   
-    //Initialize WaveSurfer
-    var wavesurfer = WaveSurfer.create({
-      container: '#' + id,
-      waveColor: '#D2EDD4',
-      progressColor: '#46B54D'
-    });
+//     //Initialize WaveSurfer
+//     var wavesurfer = WaveSurfer.create({
+//       container: '#' + id,
+//       waveColor: '#D2EDD4',
+//       progressColor: '#46B54D'
+//     });
   
-    //Load audio file
-    wavesurfer.load(path);
+//     //Load audio file
+//     wavesurfer.load(path);
   
-    //Add button event
-    $(this).find("playBtn").click(function() {
-      wavesurfer.playPause();
-    });
-  });
+//     //Add button event
+//     $(this).find("playBtn").click(function() {
+//       wavesurfer.playPause();
+//     });
+//   });
 
 // 'use strict';
 
