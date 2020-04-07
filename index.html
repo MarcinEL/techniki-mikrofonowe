@@ -113,11 +113,12 @@
 		$('.wave').each(function () {
 			//Generate unic ud
 			var id = '_' + Math.random().toString(36).substr(2, 9);
+			var idspect = '_' + Math.random().toString(30).substr(2, 9);
 			var path = $(this).attr('data-path');
 
 			//Set id to container
 			$(this).find(".wave-container").attr("id", id);
-			$(this).find(".wave-spectrogram").attr("id", id);
+			$(this).find(".wave-spectrogram").attr("id", idspect);
 
 			//Initialize WaveSurfer
 			var wavesurfer = WaveSurfer.create({
@@ -137,7 +138,7 @@
 						}
 					}),
 					WaveSurfer.spectrogram.create({
-						container: "#" + id,
+						container: "#" + idspect,
 						labels: true
 					})
 				]
