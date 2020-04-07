@@ -121,13 +121,9 @@
 				height: 256
 			});
 
-            // Add a listener to enable the play button once it's ready
-            wavesurfer.on('ready', function () {
-                $(this).find(".playpause").disabled = false;
-            });
-
 			//Load audio file
 			wavesurfer.load(path);
+			wavesurfer.setHeight(256);
 
 			//Add play button event
 			$(this).find(".playpause").click(function () {
