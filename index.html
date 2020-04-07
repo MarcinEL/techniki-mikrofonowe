@@ -79,29 +79,31 @@
 				</section>
 			</section>
 			<section>
-				<!------------------ slide ------------------->
-				<h2>Nagranie 1</h2>
-				<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
-				<div class="wave" data-path="https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3">
-					<div class="wave-container"></div>
-					<div class="wave-spectrogram"></div>
-					<button id="playBtn" class="playpause">Play / Pause</button>
-					<button id="toggleMuteBtn" class="mute">Toggle Mute</button>
-					<button id="resetBtn" class="reset">Stop</button>
-				</div>
-			</section>
-
-			<section>
-				<!------------------ slide ------------------->
-				<h2>Nagranie 2</h2>
-				<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
-				<div class="wave" data-path="https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/child_gilder_cjl.mp3">
-					<div class="wave-container"></div>
-					<div class="wave-spectrogram"></div>
-					<button id="playBtn" class="playpause">Play / Pause</button>
-					<button id="toggleMuteBtn" class="mute">Toggle Mute</button>
-					<button id="resetBtn" class="reset">Stop</button>
-				</div>
+				<section>
+					<!------------------ slide ------------------->
+					<h2>Nagranie 1</h2>
+					<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
+					<div class="wave"
+						data-path="https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3">
+						<div class="wave-container"></div>
+						<button id="playBtn" class="playpause">Play / Pause</button>
+						<button id="toggleMuteBtn" class="mute">Toggle Mute</button>
+						<button id="resetBtn" class="reset">Stop</button>
+					</div>
+				</section>
+			
+				<section>
+					<!------------------ slide ------------------->
+					<h2>Nagranie 2</h2>
+					<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
+					<div class="wave"
+						data-path="https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/child_gilder_cjl.mp3">
+						<div class="wave-container"></div>
+						<button id="playBtn" class="playpause">Play / Pause</button>
+						<button id="toggleMuteBtn" class="mute">Toggle Mute</button>
+						<button id="resetBtn" class="reset">Stop</button>
+					</div>
+				</section>
 			</section>
 		</div>
 		<!--slides-->
@@ -112,36 +114,16 @@
 		$('.wave').each(function () {
 			//Generate unic ud
 			var id = '_' + Math.random().toString(36).substr(2, 9);
-			var idspect = '_' + Math.random().toString(30).substr(2, 9);
 			var path = $(this).attr('data-path');
 
 			//Set id to container
 			$(this).find(".wave-container").attr("id", id);
-			$(this).find(".wave-spectrogram").attr("id", idspect);
 
 			//Initialize WaveSurfer
 			var wavesurfer = WaveSurfer.create({
 				container: '#' + id,
 				waveColor: '#D2EDD4',
 				progressColor: '#46B54D',
-				height: 256
-				// plugins: [
-				// 	WaveSurfer.cursor.create({
-				// 		showTime: true,
-				// 		opacity: 0.4,
-				// 		customShowTimeStyle: {
-				// 			'background-color': '#000',
-				// 			color: '#fff',
-				// 			padding: '2px',
-				// 			'font-size': '10px'
-				// 		}
-				// 	}),
-				// 	WaveSurfer.spectrogram.create({
-				// 		wavesurfer: wavesurfer,
-				// 		container: "#" + idspect,
-				// 		labels: true
-				// 	})
-				// ]
 			});
 
 			wavesurfer.once('ready', function () {
