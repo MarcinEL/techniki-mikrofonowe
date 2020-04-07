@@ -125,24 +125,24 @@
 				container: '#' + id,
 				waveColor: '#D2EDD4',
 				progressColor: '#46B54D',
-				height: 256,
-				plugins: [
-					WaveSurfer.cursor.create({
-						showTime: true,
-						opacity: 0.4,
-						customShowTimeStyle: {
-							'background-color': '#000',
-							color: '#fff',
-							padding: '2px',
-							'font-size': '10px'
-						}
-					}),
-					WaveSurfer.spectrogram.create({
-						wavesurfer: wavesurfer,
-						container: "#" + idspect,
-						labels: true
-					})
-				]
+				height: 256
+				// plugins: [
+				// 	WaveSurfer.cursor.create({
+				// 		showTime: true,
+				// 		opacity: 0.4,
+				// 		customShowTimeStyle: {
+				// 			'background-color': '#000',
+				// 			color: '#fff',
+				// 			padding: '2px',
+				// 			'font-size': '10px'
+				// 		}
+				// 	}),
+				// 	WaveSurfer.spectrogram.create({
+				// 		wavesurfer: wavesurfer,
+				// 		container: "#" + idspect,
+				// 		labels: true
+				// 	})
+				// ]
 			});
 
 			wavesurfer.once('ready', function () {
