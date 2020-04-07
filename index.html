@@ -82,7 +82,7 @@
 				<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
 				<div class="wave" data-path="https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3">
 					<div class="wave-container"></div>
-					<button id="playBtn" class="playpause">Play / Pause</button>
+					<button id="playBtn" class="playpause" disabled="disabled">Play / Pause</button>
 					<button id="toggleMuteBtn" class="mute">Toggle Mute</button>
 					<button id="stopBtn" class="stop">Stop</button>
 				</div>
@@ -94,7 +94,7 @@
 				<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
 				<div class="wave" data-path="https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/child_gilder_cjl.mp3">
 					<div class="wave-container"></div>
-					<button id="playBtn" class="playpause">Play / Pause</button>
+					<button id="playBtn" class="playpause" disabled="disabled">Play / Pause</button>
 					<button id="toggleMuteBtn" class="mute">Toggle Mute</button>
 					<button id="stopBtn" class="stop">Stop</button>
 				</div>
@@ -121,10 +121,15 @@
 				height: 256
 			});
 
+            // Add a listener to enable the play button once it's ready
+            wavesurfer.on('ready', function () {
+                $(this).find(".playpause").disabled = false;
+            });
+
 			//Load audio file
 			wavesurfer.load(path);
 
-			//Add button event
+			//Add play button event
 			$(this).find(".playpause").click(function () {
 				wavesurfer.playPause();
 				if (this.textContent === 'Play') {
@@ -133,12 +138,13 @@
 					this.textContent = "Play";
 				}
 			});
-			//Add button event
+			//Add mute button event
 			$(this).find(".mute").click(function () {
 				wavesurfer.toggleMute();
 			});
-			//Add button event
+			//Add stop button event
 			$(this).find(".stop").click(function () {
+				wavesurfer.playPause();
 				wavesurfer.seekTo(0);
 			});
 		});
