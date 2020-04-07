@@ -137,6 +137,12 @@
 				console.warn(e);
 			});
 
+			wavesurfer.on('loading', function (percents) {
+				$('#progress').value = percents;
+			});
+			wavesurfer.on('ready', function (percents) {
+				$('#progress').style.display = 'none';
+			});  
 
 			//Add play button event
 			$(this).find(".playpause").click(function () {
@@ -157,12 +163,7 @@
 			});
 
 
-			wavesurfer.on('loading', function (percents) {
-				document.getElementById('progress').value = percents;
-			});
-			wavesurfer.on('ready', function (percents) {
-				document.getElementById('progress').style.display = 'none';
-			});  
+
 		
 			//Load audio file
 			wavesurfer.load(path);
