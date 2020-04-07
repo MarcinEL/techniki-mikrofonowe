@@ -43,32 +43,6 @@
 			}
 		}, true);
 	</script>
-	<script>
-		$('.wave').each(function () {
-			//Generate unic ud
-			var id = '_' + Math.random().toString(36).substr(2, 9);
-			var path = $(this).attr('data-path');
-
-			//Set id to container
-			$(this).find(".wave-container").attr("id", id);
-
-			//Initialize WaveSurfer
-			var wavesurfer = WaveSurfer.create({
-				container: '#' + id,
-				waveColor: '#D2EDD4',
-				progressColor: '#46B54D'
-			});
-
-			//Load audio file
-			wavesurfer.load(path);
-
-			//Add button event
-			$(this).find("playBtn").click(function () {
-				wavesurfer.playPause();
-			});
-		});
-	</script>
-
 </head>
 
 <body>
@@ -101,7 +75,7 @@
 						controls></audio>
 				</section>
 			</section>
-			<section id="nagranie1">
+			<section>
 				<!------------------ slide ------------------->
 				<h2>Nagranie 1</h2>
 				<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
@@ -113,7 +87,7 @@
 				</div>
 			</section>
 
-			<section id="nagranie2">
+			<section>
 				<!------------------ slide ------------------->
 				<h2>Nagranie 2</h2>
 				<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
@@ -129,6 +103,34 @@
 	</div>
 	<!--reveal-->
 
+	<script>
+		$('.wave').each(function () {
+			//Generate unic ud
+			var id = '_' + Math.random().toString(36).substr(2, 9);
+			var path = $(this).attr('data-path');
+
+			alert(path);
+
+			//Set id to container
+			$(this).find(".wave-container").attr("id", id);
+
+			//Initialize WaveSurfer
+			var wavesurfer = WaveSurfer.create({
+				container: '#' + id,
+				waveColor: '#D2EDD4',
+				progressColor: '#46B54D'
+			});
+
+			//Load audio file
+			wavesurfer.load(path);
+
+			// //Add button event
+			$(this).find("playBtn").click(function () {
+				wavesurfer.playPause();
+			});
+		});
+	</script>
+	
 	<script src="js/reveal.js"></script>
 
 	<script>
