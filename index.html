@@ -140,9 +140,9 @@
 			wavesurfer.on('loading', function (percents) {
 				$('#progress').value = percents;
 			});
-			wavesurfer.on('ready', function (percents) {
-				$('#progress').style.display = 'none';
-			});  
+			// wavesurfer.on('ready', function (percents) {
+			// 	$('#progress').style.display = 'none';
+			// });  
 
 			//Add play button event
 			$(this).find(".playpause").click(function () {
