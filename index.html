@@ -104,6 +104,18 @@
 						<button id="resetBtn" class="reset">Stop</button>
 					</div>
 				</section>
+				<section>
+					<!------------------ slide ------------------->
+					<h2>Nagranie 3</h2>
+					<p>To nagranie przedstawia pewne zależności między dwoma innymi nagraniami</p>
+					<div class="wave"
+						data-path="https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/child_gilder_cjl.mp3">
+						<div class="wave-container"></div>
+						<button id="playBtn" class="playpause">Play / Pause</button>
+						<button id="toggleMuteBtn" class="mute">Toggle Mute</button>
+						<button id="resetBtn" class="reset">Stop</button>
+					</div>
+				</section>
 			</section>
 		</div>
 		<!--slides-->
@@ -147,6 +159,9 @@
 
 <script>
 	$(document).ready(function () {
+
+			var wavesurfers = [];
+
 			$(window).on('load', function () {
 				console.log('All assets are loaded')
 
@@ -177,6 +192,15 @@
 						console.warn(e);
 					});
 
+					wavesurfer.on('play', function (e) {
+						for (ws of wavesurfers) {
+							if (ws != wavesurfer) {
+								if (ws.isPlaying()) ws.playPause();
+							}
+							//console.log(ws.params.container + ws.isPlaying());
+						}
+
+					});
 
 					//Add play button event
 					$(this).find(".playpause").click(function () {
