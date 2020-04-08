@@ -29,11 +29,11 @@
 		document.getElementsByTagName('head')[0].appendChild(link);
 	</script>
 
-	<script src="js/app.js"></script>
+	<!-- <script src="js/app.js"></script> -->
 	<!-- wavesurfer.js -->
 	<script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script>
 	<!-- spectrogram format renderer -->
-	<script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.spectrogram.js"></script>
+	<!-- <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.spectrogram.js"></script> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 	<script>
@@ -112,59 +112,63 @@
 
 	<script>
 				$(document).ready(function () {
-					$('.wave').each(function () {
-						//Generate unic ud
-						var id = '_' + Math.random().toString(36).substr(2, 9);
-						var path = $(this).attr('data-path');
+						$(window).on('load', function () {
+							console.log('All assets are loaded')
 
-						//Set id to container
-						$(this).find(".wave-container").attr("id", id);
+							$('.wave').each(function () {
+								//Generate unic ud
+								var id = '_' + Math.random().toString(36).substr(2, 9);
+								var path = $(this).attr('data-path');
 
-						//Initialize WaveSurfer
-						var wavesurfer = WaveSurfer.create({
-							container: '#' + id,
-							waveColor: '#D2EDD4',
-							progressColor: '#46B54D',
-							height: 256
+								//Set id to container
+								$(this).find(".wave-container").attr("id", id);
+
+								//Initialize WaveSurfer
+								var wavesurfer = WaveSurfer.create({
+									container: '#' + id,
+									waveColor: '#D2EDD4',
+									progressColor: '#46B54D',
+									height: 256
+								});
+								//Load audio file
+								wavesurfer.load(path);
+								// Draw peaks
+								wavesurfer.drawBuffer();
+
+								wavesurfer.once('ready', function () {
+									console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
+								});
+
+								wavesurfer.on('error', function (e) {
+									console.warn(e);
+								});
+
+
+								//Add play button event
+								$(this).find(".playpause").click(function () {
+									wavesurfer.playPause();
+									if (this.textContent === 'Play') {
+										this.textContent = "Pause";
+									} else {
+										this.textContent = "Play";
+									}
+								});
+								//Add mute button event
+								$(this).find(".mute").click(function () {
+									wavesurfer.toggleMute();
+								});
+								//Add stop button event
+								$(this).find(".reset").click(function () {
+									wavesurfer.seekTo(0);
+								});
+
+
+
+
+
+							});
 						});
-						//Load audio file
-						wavesurfer.load(path);
-						// Draw peaks
-						wavesurfer.drawBuffer();
-
-						wavesurfer.once('ready', function () {
-							console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
-						});
-
-						wavesurfer.on('error', function (e) {
-							console.warn(e);
-						});
-
-
-						//Add play button event
-						$(this).find(".playpause").click(function () {
-							wavesurfer.playPause();
-							if (this.textContent === 'Play') {
-								this.textContent = "Pause";
-							} else {
-								this.textContent = "Play";
-							}
-						});
-						//Add mute button event
-						$(this).find(".mute").click(function () {
-							wavesurfer.toggleMute();
-						});
-						//Add stop button event
-						$(this).find(".reset").click(function () {
-							wavesurfer.seekTo(0);
-						});
-
-
-
-
-
 					});
-				});
 	</script>
 
 	<script src="js/reveal.js"></script>
