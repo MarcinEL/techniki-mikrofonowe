@@ -110,66 +110,7 @@
 	</div>
 	<!--reveal-->
 
-	<script>
-				$(document).ready(function () {
-						$(window).on('load', function () {
-							console.log('All assets are loaded')
 
-							$('.wave').each(function () {
-								//Generate unic ud
-								var id = '_' + Math.random().toString(36).substr(2, 9);
-								var path = $(this).attr('data-path');
-
-								//Set id to container
-								$(this).find(".wave-container").attr("id", id);
-
-								//Initialize WaveSurfer
-								var wavesurfer = WaveSurfer.create({
-									container: '#' + id,
-									waveColor: '#D2EDD4',
-									progressColor: '#46B54D',
-									height: 256
-								});
-								//Load audio file
-								wavesurfer.load(path);
-								// Draw peaks
-								wavesurfer.drawBuffer();
-
-								wavesurfer.once('ready', function () {
-									console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
-								});
-
-								wavesurfer.on('error', function (e) {
-									console.warn(e);
-								});
-
-
-								//Add play button event
-								$(this).find(".playpause").click(function () {
-									wavesurfer.playPause();
-									if (this.textContent === 'Play') {
-										this.textContent = "Pause";
-									} else {
-										this.textContent = "Play";
-									}
-								});
-								//Add mute button event
-								$(this).find(".mute").click(function () {
-									wavesurfer.toggleMute();
-								});
-								//Add stop button event
-								$(this).find(".reset").click(function () {
-									wavesurfer.seekTo(0);
-								});
-
-
-
-
-
-							});
-						});
-					});
-	</script>
 
 	<script src="js/reveal.js"></script>
 
@@ -203,6 +144,68 @@
 			]
 		});
 	</script>
+
+<script>
+	$(document).ready(function () {
+			$(window).on('load', function () {
+				console.log('All assets are loaded')
+
+				$('.wave').each(function () {
+					//Generate unic ud
+					var id = '_' + Math.random().toString(36).substr(2, 9);
+					var path = $(this).attr('data-path');
+
+					//Set id to container
+					$(this).find(".wave-container").attr("id", id);
+
+					//Initialize WaveSurfer
+					var wavesurfer = WaveSurfer.create({
+						container: '#' + id,
+						waveColor: '#D2EDD4',
+						progressColor: '#46B54D',
+						height: 256
+					});
+					//Load audio file
+					wavesurfer.load(path);
+					// Draw peaks
+					wavesurfer.drawBuffer();
+
+					wavesurfer.once('ready', function () {
+						console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
+					});
+
+					wavesurfer.on('error', function (e) {
+						console.warn(e);
+					});
+
+
+					//Add play button event
+					$(this).find(".playpause").click(function () {
+						wavesurfer.playPause();
+						if (this.textContent === 'Play') {
+							this.textContent = "Pause";
+						} else {
+							this.textContent = "Play";
+						}
+					});
+					//Add mute button event
+					$(this).find(".mute").click(function () {
+						wavesurfer.toggleMute();
+					});
+					//Add stop button event
+					$(this).find(".reset").click(function () {
+						wavesurfer.seekTo(0);
+					});
+
+
+
+
+
+				});
+			});
+		});
+</script>
+
 </body>
 
 </html>
