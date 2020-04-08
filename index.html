@@ -167,10 +167,9 @@
 					});
 					//Load audio file
 					wavesurfer.load(path);
-					// Draw peaks
-					wavesurfer.drawBuffer();
-
-					wavesurfer.once('ready', function () {
+					wavesurfer.on('ready', function () {
+						// Draw peaks
+						wavesurfer.drawBuffer();
 						console.log('Using wavesurfer.js ' + WaveSurfer.VERSION);
 					});
 
