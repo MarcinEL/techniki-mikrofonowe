@@ -169,159 +169,168 @@
 	</script>
 
 <script>
-		var wavesurfers = [];
-		var waves = document.querySelectorAll(".wave");
-		var ids = [];
-		var analyser;
-		var ctx;
-		var WIDTH;
-		var HEIGHT;
-		var barWidth;
-		var barHeight;
-		var x;
+	var wavesurfers = [];
+	var waves = document.querySelectorAll(".wave");
+	var ids = [];
+	var analyser;
+	var ctx;
+	var WIDTH;
+	var HEIGHT;
+	var barWidth;
+	var barHeight;
+	var x;
+	var temp_id;
 
-		waves.forEach(wavesInit);
+	waves.forEach(wavesInit);
 
-		function wavesInit(wave) {
-			//Generate unic ud
-			var id = "_" + Math.random().toString(36).substr(2, 9);
-			ids.push(id);
-			var path = wave.getAttribute("data-path");
-			//console.log(path);
+	function wavesInit(wave) {
+		//Generate unic ud
+		var id = "_" + Math.random().toString(36).substr(2, 9);
+		ids.push(id);
+		var path = wave.getAttribute("data-path");
+		//console.log(path);
 
-			//Set id to container
-			var wave_cont = wave.querySelector(".wave-container");
-			wave_cont.setAttribute("id", id);
-			//console.log(wave_cont.getAttribute('id'));
-			var wave_canvas = wave.querySelector(".canvs");
-			wave_canvas.setAttribute("id", id);
-			//console.log(wave_cont.getAttribute('id'));
-			var playpause = wave.querySelector(".playpause");
-			playpause.setAttribute("id", "playBtn" + id);
-			//console.log(playpause.getAttribute('id'));
-			var mute = wave.querySelector(".mute");
-			mute.setAttribute("id", "toggleMuteBtn" + id);
-			//console.log(mute.getAttribute('id'));
-			var reset = wave.querySelector(".reset");
-			reset.setAttribute("id", "resetBtn" + id);
-			//console.log(reset.getAttribute('id'));
+		//Set id to container
+		var wave_cont = wave.querySelector(".wave-container");
+		wave_cont.setAttribute("id", id);
+		//console.log(wave_cont.getAttribute('id'));
+		var wave_canvas = wave.querySelector(".canvs");
+		wave_canvas.setAttribute("id", 'canvas' + id);
+		//console.log(wave_cont.getAttribute('id'));
+		var playpause = wave.querySelector(".playpause");
+		playpause.setAttribute("id", "playBtn" + id);
+		//console.log(playpause.getAttribute('id'));
+		var mute = wave.querySelector(".mute");
+		mute.setAttribute("id", "toggleMuteBtn" + id);
+		//console.log(mute.getAttribute('id'));
+		var reset = wave.querySelector(".reset");
+		reset.setAttribute("id", "resetBtn" + id);
+		//console.log(reset.getAttribute('id'));
 
-			//Initialize WaveSurfer
-			var wavesurfer = WaveSurfer.create({
-				container: wave_cont,
-				waveColor: "#D2EDD4",
-				progressColor: "#46B54D",
-				height: 256
-			});
-			wavesurfers.push(wavesurfer);
-			//Load audio file
-			wavesurfer.load(path);
+		//Initialize WaveSurfer
+		var wavesurfer = WaveSurfer.create({
+			container: wave_cont,
+			waveColor: "#D2EDD4",
+			progressColor: "#46B54D",
+			height: 256
+		});
+		wavesurfers.push(wavesurfer);
+		//Load audio file
+		wavesurfer.load(path);
 
+
+		//var fbc_array = new Uint8Array(analyser.frequencyBinCount);
+
+		//ref to div to animate
+		wave_canvas.width = window.innerWidth;
+		wave_canvas.height = window.innerHeight;
+		ctx = wave_canvas.getContext('2d');
+		WIDTH = wave_canvas.width;
+		HEIGHT = wave_canvas.height;
+
+		x = 0;
+		ctx.fillStyle = "#D2EDD4";
+		ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+		console.log(analyser);
+
+
+		// Draw peaks
+		wavesurfer.drawBuffer();
+
+		wavesurfer.once("ready", function () {
+			//console.log('Using wavesurfer.js ' + WaveSurfer.VERSION + wavesurfer.params.container);
+		});
+
+		wavesurfer.on("error", function (e) {
+			console.warn(e);
+		});
+
+		//ref to div to animate
+
+		wavesurfer.on("play", function (e) {
+			//console.log(ctx.id);
+			//console.log(wavesurfer.params);
+			temp_id = wavesurfer.container.id;
 			analyser = wavesurfer.backend.analyser;
 			analyser.minDecibels = -180;
 			analyser.maxDecibels = 0;
-			analyser.fftSize = 2048;
-			analyser.smoothingTimeConstant = 0.6;
+			analyser.fftSize = 1024;
+			analyser.smoothingTimeConstant = 0.75;
 			bufferLength = analyser.frequencyBinCount;
-			//var fbc_array = new Uint8Array(analyser.frequencyBinCount);
-
-			//ref to div to animate
-			wave_canvas.width = window.innerWidth;
-			wave_canvas.height = window.innerHeight;
-			ctx = wave_canvas.getContext("2d");
-			WIDTH = wave_canvas.width;
-			HEIGHT = wave_canvas.height;
 			barWidth = (WIDTH / bufferLength) * 1;
-			x = 0;
-			ctx.fillStyle = "#D2EDD4";
-			ctx.fillRect(0, 0, WIDTH, HEIGHT);
+			wave_canvas = document.getElementById('canvas' + temp_id);
+			ctx = wave_canvas.getContext('2d');
 
-			console.log(analyser);
-
-			// Draw peaks
-			wavesurfer.drawBuffer();
-
-			wavesurfer.once("ready", function () {
-				//console.log('Using wavesurfer.js ' + WaveSurfer.VERSION + wavesurfer.params.container);
-			});
-
-			wavesurfer.on("error", function (e) {
-				console.warn(e);
-			});
-
-			//ref to div to animate
-
-			wavesurfer.on("play", function (e) {
-				//console.log(ctx.id);
-				//console.log(wavesurfer.params);
-				frameLooper();
-				for (var ws of wavesurfers) {
-					if (ws != wavesurfer) {
-						if (ws.isPlaying()) ws.playPause();
-					}
-					//console.log(ws.params.container + ws.isPlaying());
+			frameLooper();
+			for (var ws of wavesurfers) {
+				if (ws != wavesurfer) {
+					if (ws.isPlaying()) ws.playPause();
 				}
-			});
-
-			//Add play button event
-
-			$("#playBtn" + id).on("click", function (e) {
-				// e.target was the clicked element
-				//console.log(e.target.id);
-				if (e.target.id == "playBtn" + id) {
-					//console.log("Anchor element clicked!");
-					wavesurfer.playPause();
-				}
-			});
-			//Add mute button event
-			$("#toggleMuteBtn" + id).on("click", function (e) {
-				// e.target was the clicked element
-				//console.log(e.target.id);
-				if (e.target.id == "toggleMuteBtn" + id) {
-					//console.log("Anchor element clicked!");
-					wavesurfer.toggleMute();
-				}
-			});
-
-			//Add stop button event
-			$("#resetBtn" + id).on("click", function (e) {
-				// e.target was the clicked element
-				//console.log(e.target.id);
-				if (e.target.id == "resetBtn" + id) {
-					//console.log("Anchor element clicked!");
-					wavesurfer.seekTo(0);
-				}
-			});
-		}
-
-		function frameLooper() {
-			//console.log(analyser);
-			//console.log(ctx);
-			x = 0;
-			requestAnimationFrame(frameLooper);
-			var bufferLength = analyser.frequencyBinCount;
-			var fbc_array = new Uint8Array(analyser.frequencyBinCount);
-			analyser.getByteFrequencyData(fbc_array);
-			ctx.fillStyle = "#FFF";
-			ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-			for (var i = 0; i < bufferLength; i++) {
-				//barHeight = fbc_array[i];
-				var value = fbc_array[i];
-				var percent = value / 256;
-				var height = HEIGHT * percent;
-				var offset = HEIGHT - height - 1;
-
-				var r = value + 25 * (i / bufferLength);
-				var g = 250 * (i / bufferLength);
-				var b = 50;
-
-				ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-				ctx.fillRect(x, offset, barWidth, height);
-
-				x += barWidth + 256 / analyser.fftSize;
+				//console.log(ws.params.container + ws.isPlaying());
 			}
+		});
+
+		//Add play button event
+
+		$("#playBtn" + id).on("click", function (e) {
+			// e.target was the clicked element
+			//console.log(e.target.id);
+			if (e.target.id == "playBtn" + id) {
+				//console.log("Anchor element clicked!");
+				wavesurfer.playPause();
+			}
+		});
+		//Add mute button event
+		$("#toggleMuteBtn" + id).on("click", function (e) {
+			// e.target was the clicked element
+			//console.log(e.target.id);
+			if (e.target.id == "toggleMuteBtn" + id) {
+				//console.log("Anchor element clicked!");
+				wavesurfer.toggleMute();
+			}
+		});
+
+		//Add stop button event
+		$("#resetBtn" + id).on("click", function (e) {
+			// e.target was the clicked element
+			//console.log(e.target.id);
+			if (e.target.id == "resetBtn" + id) {
+				//console.log("Anchor element clicked!");
+				wavesurfer.seekTo(0);
+			}
+		});
+	}
+
+	function frameLooper() {
+		//console.log(analyser);
+		//console.log(ctx);
+		x = 0;
+		requestAnimationFrame(frameLooper);
+		var bufferLength = analyser.frequencyBinCount;
+		var fbc_array = new Uint8Array(analyser.frequencyBinCount);
+		analyser.getByteFrequencyData(fbc_array);
+		ctx.fillStyle = "#FFF";
+		ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+		for (var i = 0; i < bufferLength; i++) {
+			//barHeight = fbc_array[i];
+			var value = fbc_array[i];
+			var percent = value / 256;
+			var height = HEIGHT * percent;
+			var offset = HEIGHT - height - 1;
+
+			var r = value + (25 * (i / bufferLength));
+			var g = 250 * (i / bufferLength);
+			var b = 50;
+
+			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+			ctx.fillRect(x, offset, barWidth, height);
+
+			x += barWidth + 256 / analyser.fftSize;
 		}
+	}
+
 
 </script>
 
