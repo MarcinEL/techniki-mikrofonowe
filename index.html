@@ -179,6 +179,7 @@
 	var barWidth;
 	var barHeight;
 	var x;
+	var x_log_temp;
 	var temp_id;
 
 	waves.forEach(wavesInit);
@@ -195,7 +196,7 @@
 		wave_cont.setAttribute("id", id);
 		//console.log(wave_cont.getAttribute('id'));
 		var wave_canvas = wave.querySelector(".canvs");
-		wave_canvas.setAttribute("id", 'canvas' + id);
+		wave_canvas.setAttribute("id", "canvas" + id);
 		//console.log(wave_cont.getAttribute('id'));
 		var playpause = wave.querySelector(".playpause");
 		playpause.setAttribute("id", "playBtn" + id);
@@ -213,18 +214,27 @@
 			waveColor: "#D2EDD4",
 			progressColor: "#46B54D",
 			height: 256
+			// xhr : {
+			// // cache: 'default',
+			//  mode: 'no-cors',
+			//  method: 'GET'
+			// // //credentials: 'same-origin',
+			// // //redirect: 'follow',
+			// // //referrer: 'client'
+			// // //headers: [
+			// // //{ key: 'Authorization', value: 'my-token' } ]
+			//                                   }
 		});
 		wavesurfers.push(wavesurfer);
 		//Load audio file
 		wavesurfer.load(path);
-
 
 		//var fbc_array = new Uint8Array(analyser.frequencyBinCount);
 
 		//ref to div to animate
 		wave_canvas.width = window.innerWidth;
 		wave_canvas.height = window.innerHeight;
-		ctx = wave_canvas.getContext('2d');
+		ctx = wave_canvas.getContext("2d");
 		WIDTH = wave_canvas.width;
 		HEIGHT = wave_canvas.height;
 
@@ -233,7 +243,6 @@
 		ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
 		console.log(analyser);
-
 
 		// Draw peaks
 		wavesurfer.drawBuffer();
@@ -253,14 +262,18 @@
 			//console.log(wavesurfer.params);
 			temp_id = wavesurfer.container.id;
 			analyser = wavesurfer.backend.analyser;
+			var sampleRate = wavesurfer.backend.ac.sampleRate;
+			var channels = wavesurfer.backend.buffer.numberOfChannels;
+			// var l = buffer.getChannelData(0);
+			// var r = channels > 1 ? buffer.getChannelData(1) : l;
 			analyser.minDecibels = -180;
 			analyser.maxDecibels = 0;
-			analyser.fftSize = 1024;
+			analyser.fftSize = 8192;
 			analyser.smoothingTimeConstant = 0.75;
 			bufferLength = analyser.frequencyBinCount;
-			barWidth = (WIDTH / bufferLength) * 1;
-			wave_canvas = document.getElementById('canvas' + temp_id);
-			ctx = wave_canvas.getContext('2d');
+			barWidth = (WIDTH / bufferLength) * 0.95; //a little bit less to make bar more clear in visualization
+			wave_canvas = document.getElementById("canvas" + temp_id);
+			ctx = wave_canvas.getContext("2d");
 
 			frameLooper();
 			for (var ws of wavesurfers) {
@@ -306,6 +319,7 @@
 		//console.log(analyser);
 		//console.log(ctx);
 		x = 0;
+		x_log_temp = 0;
 		requestAnimationFrame(frameLooper);
 		var bufferLength = analyser.frequencyBinCount;
 		var fbc_array = new Uint8Array(analyser.frequencyBinCount);
@@ -315,21 +329,40 @@
 
 		for (var i = 0; i < bufferLength; i++) {
 			//barHeight = fbc_array[i];
+			//var skewX = 1-Math.exp(Math.log10(1-i/bufferLength));
+			//var skewIdx = Math.round(skewX*bufferLength);
+			//var value = fbc_array[];
+			var f = i / bufferLength;
+
+			/* Convert to log frequency scale (octaves). */
+			var noctaves = 10;
+			if (i == 0) {
+				f = 0;
+			} else {
+				f = 1 + Math.log(f) / (noctaves * Math.LN2);
+			}
+
+			/* Draw the magnitude */
+			var x_log = f * WIDTH;
+
 			var value = fbc_array[i];
 			var percent = value / 256;
 			var height = HEIGHT * percent;
 			var offset = HEIGHT - height - 1;
 
-			var r = value + (25 * (i / bufferLength));
+			var r = value + 25 * (i / bufferLength);
 			var g = 250 * (i / bufferLength);
 			var b = 50;
 
 			ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
-			ctx.fillRect(x, offset, barWidth, height);
+			//ctx.fillRect(x, offset, barWidth, height);
+			ctx.fillRect(x_log_temp, offset, (x_log - x_log_temp) * 0.95, height);
 
-			x += barWidth + 256 / analyser.fftSize;
+			//x += WIDTH / (analyser.fftSize / 2);
+			x_log_temp = x_log;
 		}
 	}
+
 
 
 </script>
